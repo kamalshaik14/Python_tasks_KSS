@@ -1,0 +1,4 @@
+kamal:80
+yasin:75
+nagul:80
+average: 70.00
