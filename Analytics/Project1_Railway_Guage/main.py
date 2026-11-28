@@ -29,6 +29,12 @@ os.makedirs("graphs", exist_ok=True)   # create the graphs folder
 
 
 # ---------- SCENARIO 1: Load and clean the data ----------
+
+'''1. Load the dataset into a Pandas DataFrame. 
+2. Display the first 5 rows and column names. 
+3. Check for missing values and replace them with 0. 
+4. Convert all gauge columns (Broad, Metre, Narrow, Total) to numeric types.
+'''
 df = pd.read_csv("railway_gauges.csv")     # 1. load the CSV file
 print(df.head())                            # 2. show first 5 rows
 print(df.columns)                           # 2. show column names
@@ -43,6 +49,14 @@ df["Start Year"] = df["Year"].str[:4].astype(int)
 
 
 # ---------- SCENARIO 2: Line graph of Total ----------
+'''
+1. Extract Year and Total columns. 
+2. Plot a line graph showing Total tracks over years. 
+3. Add: 
+○ Title 
+○ X and Y labels 
+4. Identify whether the trend is increasing or decreasing
+'''
 plt.plot(df["Start Year"], df["Total"], marker="o")
 plt.title("Growth of Total Railway Network Over Time")
 plt.xlabel("Year")
@@ -56,6 +70,14 @@ print("Trend: increasing overall (with some ups and downs)")
 
 
 # ---------- SCENARIO 3: Bar chart after 2000 ----------
+
+'''
+1. Filter the dataset for years after 2000. 
+2. Select Broad Gauge, Metre Gauge, and Narrow Gauge. 
+3. Plot a grouped bar chart comparing all three gauges. 
+4. Add legend and proper labels. 
+5. Identify which gauge dominates in recent years.
+'''
 recent = df[df["Start Year"] > 2000]        # only years after 2000
 gauges = recent[["Broad Gauge", "Metre Gauge", "Narrow Gauge"]]
 gauges.index = recent["Year"]               # use the year as the label
@@ -72,6 +94,13 @@ print("Biggest gauge after 2000: Broad Gauge")
 
 
 # ---------- SCENARIO 4: Pie chart of all years ----------
+'''
+1. Calculate total sum of each gauge across all years. 
+2. Create a new structure (Series/DataFrame) for totals. 
+3. Plot a pie chart showing percentage contribution. 
+4. Add percentage labels (autopct). 
+5. Interpret which gauge contributes the most.
+'''
 totals = df[["Broad Gauge", "Metre Gauge", "Narrow Gauge"]].sum()
 print(totals)
 
@@ -82,6 +111,24 @@ plt.close()
 
 
 # ---------- SCENARIO 5: Percentages, growth and more graphs ----------
+
+'''
+1. Create new columns: 
+○ % Broad Gauge 
+○ % Metre Gauge 
+○ % Narrow Gauge 
+2. Use NumPy (np.diff) to calculate yearly growth of Total tracks. 
+3. Plot: 
+○ Line graph for all gauges 
+○ Stacked bar chart showing composition 
+4. Highlight: 
+○ Years with highest growth 
+○ Decline in any gauge 
+5. Provide a final conclusion: 
+�
+�
+“Is the railway system shifting towards a single dominant gauge?”
+'''
 # Percentage of each gauge in the total
 df["% Broad Gauge"] = df["Broad Gauge"] / df["Total"] * 100
 df["% Metre Gauge"] = df["Metre Gauge"] / df["Total"] * 100
